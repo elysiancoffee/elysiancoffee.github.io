@@ -1,41 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <script type="module">
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login to Upload</title>
+  <script type="module">
+    // Import Firebase SDK modules
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-apiKey: "AIzaSyCmwJMJ0a4LsFWyXMsF9Tzwkt9h6eOIPx0",
-authDomain: "elysiancoffee-3ab24.firebaseapp.com",
-projectId: "elysiancoffee-3ab24",
-storageBucket: "elysiancoffee-3ab24.appspot.com",
-messagingSenderId: "666937180776",
-appId: "1:666937180776:web:8697cb2c6f767b1148b1dd"
-};
+    // Your Firebase configuration
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "your-project-id.firebaseapp.com",
+      projectId: "your-project-id",
+      storageBucket: "your-project-id.appspot.com",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-    </script>
-    <script>
-        function checkPassword() {
-            var password = prompt("Please enter the password:");
-            if (password === "yourpassword") {
-                window.location.href = "/uploads/upload.html";
-            } else {
-                alert("Incorrect password!");
-            }
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Handle login form submission
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginForm = document.getElementById('loginForm');
+      const errorMessage = document.getElementById('errorMessage');
+
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        try {
+          // Sign in using Firebase Authentication
+          const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          
+          // On success, redirect to upload page
+          window.location.href = "/uploads/upload.html";
+        } catch (error) {
+          // Display error message if login fails
+          errorMessage.textContent = error.message;
         }
-        window.onload = checkPassword;
-    </script>
+      });
+    });
+  </script>
 </head>
 <body>
-  
+  <h2>Login to Access Uploads</h2>
+  <form id="loginForm">
+    <input type="email" id="email" placeholder="Email" required><br><br>
+    <input type="password" id="password" placeholder="Password" required><br><br>
+    <button type="submit">Login</button>
+  </form>
+  <p id="errorMessage" style="color:red;"></p>
 </body>
 </html>
