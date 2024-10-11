@@ -1,1 +1,22 @@
-403
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script>
+        function checkPassword() {
+            var password = prompt("Please enter the password:");
+            if (password === "yourpassword") {
+                window.location.href = "/uploads/index.html";
+            } else {
+                alert("Incorrect password!");
+            }
+        }
+        window.onload = checkPassword;
+    </script>
+</head>
+<body>
+  
+</body>
+</html>
