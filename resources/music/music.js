@@ -8,6 +8,11 @@
   ];
 
   let currentTrackIndex = 0;
+  const saved = localStorage.getItem('audioTime');
+if (saved) {
+  const [savedIndex] = saved.split('|');
+  currentTrackIndex = parseInt(savedIndex);
+}
   let saveInterval;
 
   function loadTrack(index) {
