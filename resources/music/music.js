@@ -22,8 +22,11 @@
     if (saved) {
       const [savedIndex, savedTime] = saved.split('|');
       if (parseInt(savedIndex) === index) {
-        audio.currentTime = parseFloat(savedTime);
-      }
+  audio.addEventListener('loadedmetadata', function setTimeOnce() {
+    audio.currentTime = parseFloat(savedTime);
+    audio.removeEventListener('loadedmetadata', setTimeOnce);
+  });
+}
     }
 
     // Respect 24-hour pause
