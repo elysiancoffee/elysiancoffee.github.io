@@ -8,33 +8,37 @@
   ];
 
   let currentTrackIndex = 0;
-  const saved = localStorage.getItem('audioTime');
-if (saved) {
-  const [savedIndex] = saved.split('|');
-  currentTrackIndex = parseInt(savedIndex);
-}
   let saveInterval;
+
+  // === Load saved track index and time (AFTER playlist is ready) ===
+  const saved = localStorage.getItem('audioTime');
+  if (saved) {
+    const [savedIndex] = saved.split('|');
+    const index = parseInt(savedIndex);
+    if (!isNaN(index) && index >= 0 && index < playlist.length) {
+      currentTrackIndex = index;
+    }
+  }
 
   function loadTrack(index) {
     if (!playlist[index]) return;
     audio.src = playlist[index];
 
-    const saved = localStorage.getItem('audioTime');
+    // Wait for metadata before setting time
+    audio.addEventListener('loadedmetadata', function setTimeOnce() {
+      const saved = localStorage.getItem('audioTime');
+      if (saved) {
+        const [savedIndex, savedTime] = saved.split('|');
+        if (parseInt(savedIndex) === index) {
+          audio.currentTime = parseFloat(savedTime);
+        }
+      }
+      audio.removeEventListener('loadedmetadata', setTimeOnce);
+    });
+
     const holdUntil = localStorage.getItem('pauseUntil');
     const now = Date.now();
 
-    // Restore position if saved
-    if (saved) {
-      const [savedIndex, savedTime] = saved.split('|');
-      if (parseInt(savedIndex) === index) {
-  audio.addEventListener('loadedmetadata', function setTimeOnce() {
-    audio.currentTime = parseFloat(savedTime);
-    audio.removeEventListener('loadedmetadata', setTimeOnce);
-  });
-}
-    }
-
-    // Respect 24-hour pause
     if (holdUntil && now < parseInt(holdUntil)) {
       audio.pause();
       bubble.innerHTML = '▶️';
@@ -44,14 +48,14 @@ if (saved) {
     }
   }
 
-  // === Load and play next on end ===
+  // === Loop to next track ===
   audio.addEventListener('ended', () => {
     localStorage.removeItem('audioTime');
     currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
     loadTrack(currentTrackIndex);
   });
 
-  // === Save current time every second ===
+  // === Save current track and time ===
   audio.addEventListener('playing', () => {
     if (saveInterval) clearInterval(saveInterval);
     saveInterval = setInterval(() => {
@@ -59,7 +63,7 @@ if (saved) {
     }, 1000);
   });
 
-  // === Play/pause logic ===
+  // === Play/pause toggle bubble ===
   bubble.addEventListener('click', () => {
     const now = Date.now();
 
@@ -75,12 +79,12 @@ if (saved) {
     }
   });
 
-  // === Set initial icon state ===
+  // === Set initial icon ===
   if (audio.paused) {
     bubble.innerHTML = '▶️';
   } else {
     bubble.innerHTML = '⏸️';
   }
 
-  // === Start playback on page load ===
+  // === Start playback ===
   loadTrack(currentTrackIndex);
