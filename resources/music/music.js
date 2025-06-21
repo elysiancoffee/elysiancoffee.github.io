@@ -4,7 +4,9 @@
   // === Playlist of MP3 URLs ===
   const playlist = [
     'https://elysiancoffee.github.io/resources/music/What Makes You Beautiful.mp3',
-    'https://elysiancoffee.github.io/resources/music/2000.mp3'
+    'https://elysiancoffee.github.io/resources/music/2000.mp3',
+    'https://elysiancoffee.github.io/resources/music/[SPOTDOWNLOADER.COM] Belly Dancer.mp3',
+    'https://elysiancoffee.github.io/resources/music/[SPOTDOWNLOADER.COM] Where Are You Now.mp3'
   ];
 
   let currentTrackIndex = 0;
