@@ -20,7 +20,7 @@
 /* Put the content above the blurred background */
 .forumReplyWrapper:has(.userPostUsername a[href="/userinfo/Ri"]) :not(.forumReplyWrapper) {
 	position: relative!important;
-	z-index: 1!important;
+	z-index: 999!important;
 }
 
 .forumReplyWrapper:has(.userPostUsername a[href="/userinfo/Ri"]) .forumReplyHeader, .forumReplyWrapper:has(.userPostUsername a[href="/userinfo/Ri"]) .forumReplyFooter {
