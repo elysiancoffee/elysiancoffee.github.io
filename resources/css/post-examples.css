@@ -1,0 +1,38 @@
+.forumReplyWrapper:has(.userPostUsername a[href="/userinfo/Ri"]) {
+    border-radius: 13px;
+}
+
+.forumReplyWrapper:has(.userPostUsername a[href="/userinfo/Ri"]) {
+	position: relative;
+	overflow: hidden;
+}
+
+.forumReplyWrapper:has(.userPostUsername a[href="/userinfo/Ri"])::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: url('https://i.pinimg.com/736x/07/2a/64/072a648fab7be4e61b8f3739c0dfa5c9.jpg') no-repeat center;
+	background-size: cover;
+	z-index: 1;
+	opacity: 0.6;
+}
+
+/* Put the content above the blurred background */
+.forumReplyWrapper:has(.userPostUsername a[href="/userinfo/Ri"]) :not(.forumReplyWrapper) {
+	position: relative;
+	z-index: 999;
+}
+
+.forumReplyWrapper:has(.userPostUsername a[href="/userinfo/Ri"]) .forumReplyHeader, .forumReplyWrapper:has(.userPostUsername a[href="/userinfo/Ri"]) .forumReplyFooter {
+	background-color: hsl(0deg 0% 0% / 32%);
+	border-radius: 10px;
+	border: 1px solid rgba(255, 255, 255, .1);
+	backdrop-filter: blur(10px);
+}
+
+.forumReplyWrapper:has(.userPostUsername a[href="/userinfo/Ri"]) .forumReplyMessage, {
+	border: thin solid rgba(255, 255, 255, .1);
+	backdrop-filter: blur(10px);
+	padding: 10px;
+	border-radius: 12px;
+}
