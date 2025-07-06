@@ -30,7 +30,7 @@
 	backdrop-filter: blur(10px);
 }
 
-.forumReplyWrapper:has(.userPostUsername a[href="/userinfo/Ri"]) .forumReplyMessage, {
+.forumReplyWrapper:has(.userPostUsername a[href="/userinfo/Ri"]) .forumReplyMessage {
 	border: thin solid rgba(255, 255, 255, .1);
 	backdrop-filter: blur(10px)!important;
 	padding: 10px;
