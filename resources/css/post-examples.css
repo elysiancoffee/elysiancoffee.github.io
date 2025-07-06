@@ -1,38 +1,37 @@
-.forumReplyWrapper:has(.userPostUsername a[href="/userinfo/Ri"]) {
+/* POST 1 BELOW -- https://www.hexrpg.com/f/315333/254091?page=1#8287660*/
+
+.forumReplyWrapper:has(> div[id^="8287660"]) {
     border-radius: 13px;
+    position: relative;
+    overflow: hidden;
 }
 
-.forumReplyWrapper:has(.userPostUsername a[href="/userinfo/Ri"]) {
-	position: relative;
-	overflow: hidden;
+.forumReplyWrapper:has(> div[id^="8287660"])::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('https://i.pinimg.com/736x/07/2a/64/072a648fab7be4e61b8f3739c0dfa5c9.jpg') no-repeat center;
+    background-size: cover;
+    z-index: 0;
+    opacity: 0.6;
 }
 
-.forumReplyWrapper:has(.userPostUsername a[href="/userinfo/Ri"])::after {
-	content: '';
-	position: absolute;
-	inset: 0;
-	background: url('https://i.pinimg.com/736x/07/2a/64/072a648fab7be4e61b8f3739c0dfa5c9.jpg') no-repeat center;
-	background-size: cover;
-	z-index: 1;
-	opacity: 0.6;
+.forumReplyWrapper:has(> div[id^="8287660"]) > * {
+    position: relative;
+    z-index: 1;
 }
 
-/* Put the content above the blurred background */
-.forumReplyWrapper:has(.userPostUsername a[href="/userinfo/Ri"]) :not(.forumReplyWrapper) {
-	position: relative;
-	z-index: 999;
+.forumReplyWrapper:has(> div[id^="8287660"]) .forumReplyHeader,
+.forumReplyWrapper:has(> div[id^="8287660"]) .forumReplyFooter {
+    background-color: hsl(0deg 0% 0% / 32%);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, .1);
+    backdrop-filter: blur(10px);
 }
 
-.forumReplyWrapper:has(.userPostUsername a[href="/userinfo/Ri"]) .forumReplyHeader, .forumReplyWrapper:has(.userPostUsername a[href="/userinfo/Ri"]) .forumReplyFooter {
-	background-color: hsl(0deg 0% 0% / 32%);
-	border-radius: 10px;
-	border: 1px solid rgba(255, 255, 255, .1);
-	backdrop-filter: blur(10px);
-}
-
-.forumReplyWrapper:has(.userPostUsername a[href="/userinfo/Ri"]) .forumReplyMessage {
-	border: thin solid rgba(255, 255, 255, .1);
-	backdrop-filter: blur(10px)!important;
-	padding: 10px;
-	border-radius: 12px;
+.forumReplyWrapper:has(> div[id^="8287660"]) .forumReplyMessage {
+    border: thin solid rgba(255, 255, 255, .1);
+    backdrop-filter: blur(10px);
+    padding: 10px;
+    border-radius: 12px;
 }
