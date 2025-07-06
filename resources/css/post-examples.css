@@ -18,7 +18,7 @@
 }
 
 /* Put the content above the blurred background */
-.forumReplyWrapper:has(.userPostUsername a[href="/userinfo/Ri"]) :not(.forumReplyWrapper) {
+.forumReplyWrapper:has(.userPostUsername a[href="/userinfo/Ri"]) {
 	position: relative!important;
 	z-index: 999!important;
 }
