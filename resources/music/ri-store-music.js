@@ -10,7 +10,7 @@
   let saveInterval;
 
   // === Load saved track index and time (AFTER playlist is ready) ===
-  const saved = localStorage.getItem('audioTime');
+  const saved = localStorage.getItem('riStoreAudioTime');
   if (saved) {
     const [savedIndex] = saved.split('|');
     const index = parseInt(savedIndex);
@@ -25,7 +25,7 @@
 
     // Wait for metadata before setting time
     audio.addEventListener('loadedmetadata', function setTimeOnce() {
-      const saved = localStorage.getItem('audioTime');
+      const saved = localStorage.getItem('riStoreAudioTime');
       if (saved) {
         const [savedIndex, savedTime] = saved.split('|');
         if (parseInt(savedIndex) === index) {
@@ -49,7 +49,7 @@
 
   // === Loop to next track ===
   audio.addEventListener('ended', () => {
-    localStorage.removeItem('audioTime');
+    localStorage.removeItem('riStoreAudioTime');
     currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
     loadTrack(currentTrackIndex);
   });
@@ -58,7 +58,7 @@
   audio.addEventListener('playing', () => {
     if (saveInterval) clearInterval(saveInterval);
     saveInterval = setInterval(() => {
-      localStorage.setItem('audioTime', `${currentTrackIndex}|${audio.currentTime}`);
+      localStorage.setItem('riStoreAudioTime', `${currentTrackIndex}|${audio.currentTime}`);
     }, 1000);
   });
 
