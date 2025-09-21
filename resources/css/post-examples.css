@@ -16,7 +16,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: url('https://i.ibb.co/6JqMLZY4/cobwebs.png') repeat center;
+  background: url('https://i.ibb.co/6JqMLZY4/cobwebs.png') repeat-x center;
   z-index: 2;
   pointer-events: none;
 }
