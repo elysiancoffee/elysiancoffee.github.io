@@ -1,4 +1,45 @@
-/* POST 1 BELOW -- https://www.hexrpg.com/f/315333/254091?page=1#8287660*/
+.forumReplyWrapper:has(a[href~="/userinfo/Ri"]) {
+  border-radius: 13px;
+  position: relative;
+  overflow: hidden;
+}
+.forumReplyWrapper:has(a[href~="/userinfo/Ri"])::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('https://i.pinimg.com/736x/83/46/0a/83460a379cef003e0949aac945035505.jpg') no-repeat center;
+    background-size: cover;
+    z-index: 0;
+    opacity: 0.6;
+}
+.forumReplyWrapper:has(a[href~="/userinfo/Ri"])::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('https://i.ibb.co/6JqMLZY4/cobwebs.png') repeat center;
+  z-index: 2;
+  pointer-events: none;
+}
+.forumReplyWrapper:has(a[href~="/userinfo/Ri"]) > * {
+  position: relative;
+  z-index: 1;
+}
+.forumReplyWrapper:has(a[href~="/userinfo/Ri"]) .forumReplyHeader,
+.forumReplyWrapper:has(a[href~="/userinfo/Ri"]) .forumReplyFooter {
+  background-color: hsl(0deg 0% 0% / 32%);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, .1);
+  backdrop-filter: blur(10px);
+}
+.forumReplyWrapper:has(a[href~="/userinfo/Ri"]) .forumReplyMessage {
+  border: thin solid rgba(255, 255, 255, .2);
+  background-color: hsl(0deg 0% 0% / 40%);
+  backdrop-filter: blur(10px);
+  padding: 10px;
+  border-radius: 12px;
+}
+
+/* POST EXAMPLE BELOW, SHOULD BE AT BOTTOM -- https://www.hexrpg.com/f/315333/254091?page=1#8287660*/
 
 .forumReplyWrapper:has(> div[id^="8287660"]) {
     border-radius: 13px;
