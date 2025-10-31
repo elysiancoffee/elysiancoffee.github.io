@@ -7,19 +7,19 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: url('https://i.pinimg.com/736x/83/46/0a/83460a379cef003e0949aac945035505.jpg') no-repeat center;
+    background: url('https://i.pinimg.com/1200x/d6/3d/75/d63d756….jpg') no-repeat center;
     background-size: cover;
     z-index: 0;
-    opacity: 0.6;
+    opacity: 0.2;
 }
-.forumReplyWrapper:has(a[href~="/userinfo/Ri"])::before {
+/*.forumReplyWrapper:has(a[href~="/userinfo/Ri"])::before {
   content: '';
   position: absolute;
   inset: 0;
   background: url('https://i.ibb.co/6JqMLZY4/cobwebs.png') repeat-x;
   z-index: 2;
   pointer-events: none;
-}
+}*/
 .forumReplyWrapper:has(a[href~="/userinfo/Ri"]) > * {
   position: relative;
   z-index: 1;
