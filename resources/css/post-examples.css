@@ -3,37 +3,32 @@
   position: relative;
   overflow: hidden;
 }
+
 .forumReplyWrapper:has(a[href~="/userinfo/Ri"])::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: url('https://i.pinimg.com/1200x/d6/3d/75/d63d75652384c81e06065859e549b6d4.jpg') no-repeat center;
-    background-size: cover;
+    background: url('//i.pinimg.com/1200x/ba/5b/61/ba5b613b625e1013284f588943cd6e15.jpg') no-repeat center/cover;
     z-index: 0;
     opacity: 0.2;
 }
-/*.forumReplyWrapper:has(a[href~="/userinfo/Ri"])::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url('https://i.ibb.co/6JqMLZY4/cobwebs.png') repeat-x;
-  z-index: 2;
-  pointer-events: none;
-}*/
+
 .forumReplyWrapper:has(a[href~="/userinfo/Ri"]) > * {
   position: relative;
   z-index: 1;
 }
+
 .forumReplyWrapper:has(a[href~="/userinfo/Ri"]) .forumReplyHeader,
 .forumReplyWrapper:has(a[href~="/userinfo/Ri"]) .forumReplyFooter {
   background-color: hsl(0deg 0% 0% / 32%);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, .1);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(5px);
 }
+
 .forumReplyWrapper:has(a[href~="/userinfo/Ri"]) .forumReplyMessage {
   border: thin solid rgba(255, 255, 255, .2);
-  background-color: hsl(0deg 0% 0% / 40%);
+  background-color: hsl(0deg 0% 0% / 20%);
   backdrop-filter: blur(10px);
   padding: 10px;
   border-radius: 12px;
