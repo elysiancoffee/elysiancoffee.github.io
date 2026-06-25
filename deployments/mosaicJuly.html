@@ -1,97 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="./style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOSAIC. // July</title>
-    <style>
-      body {background:#0f1112; color:white;font-family: arial;}
-      #viewer { display: flex; flex-direction: column; gap: 30px; }
-      .puzzlesNav { display: flex; justify-content: space-between; align-items: end; }
-    </style>
-  </head>
-  <body>
-    <center>
-    <h2 style="font-family: var(--glass-antiqua)">THE MOSAIC. // JULY</h2>
-    <h3 style="font-family: var(--glass-antiqua)">CURRENT PUZZLE</h3>
-</center>
-<br><br>
-
-<div id="viewer">
-
-    <center><img id="puzzle" width="300" height="300"></center>
-
-    <div class="puzzlesNav">
-        <a id="prev" style="cursor: pointer;">< Previous</a>
-
-        <h3 id="title" style="font-family: var(--glass-antiqua)"></h3>
-
-        <a id="next" style="cursor: pointer;">Next ></a>
-    </div>
-
-</div>
-    <script>
-      const url = "https://opensheet.elk.sh/13G6QupXgQifBEgAVVKcUk9PnKNp3fzDxNtYLMvzF8MI/Display";
-      
-      let puzzles = [];
-      let currentIndex = 0;
-      let viewingIndex = 0;
-      
-      const img = document.getElementById("puzzle");
-      const title = document.getElementById("title");
-      const prev = document.getElementById("prev");
-      const next = document.getElementById("next");
-      
-      async function loadPuzzles() {
-          try {
-              const response = await fetch(url);
-              puzzles = await response.json();
-      
-              currentIndex = puzzles.findIndex(p => p.Done != "TRUE");
-      
-              if(currentIndex == -1) {
-                  currentIndex = puzzles.length - 1;
-              }
-      
-              viewingIndex = currentIndex;
-              render();
-          } catch (error) {
-              console.error("Fetch blocked or failed:", error);
-              title.textContent = "Error loading puzzles.";
-          }
-      }
-      
-      function render() {
-          if (!puzzles || puzzles.length === 0) return;
-          
-          const puzzle = puzzles[viewingIndex];
-      
-          img.src = puzzle.Link;
-          title.textContent = "Puzzle " + puzzle.Number;
-      
-          prev.style.opacity = viewingIndex === 0 ? "0.5" : "1";
-          prev.style.pointerEvents = viewingIndex === 0 ? "none" : "auto";
-      
-          next.style.opacity = viewingIndex === puzzles.length - 1 ? "0.5" : "1";
-          next.style.pointerEvents = viewingIndex === puzzles.length - 1 ? "none" : "auto";
-      }
-      
-      prev.addEventListener('click', () => {
-          if(viewingIndex > 0){
-              viewingIndex--;
-              render();
-          }
-      });
-      
-      next.addEventListener('click', () => {
-          if(viewingIndex < puzzles.length - 1){
-              viewingIndex++;
-              render();
-          }
-      });
-      
-      loadPuzzles();
-    </script>
-  </body>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="./style.css">
+		<link href="https://fonts.googleapis.com/css2?family=Glass+Antiqua&family=Josefin+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+		<link href="https://fonts.cdnfonts.com/css/amagro" rel="stylesheet">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>MOSAIC. // July</title>
+		<style>
+			body {background:#0f1112; color:white;font-family: arial;}
+			#viewer { display: flex; flex-direction: column; gap: 30px; }
+			.puzzlesNav { display: flex; justify-content: space-between; align-items: end; }
+		</style>
+	</head>
+	<body>
+		<center>
+			<h2 style="font-family: 'Glass Antiqua',sans-serif;">THE MOSAIC. // JULY</h2>
+			<h3 style="font-family: 'Glass Antiqua',sans-serif;">CURRENT PUZZLE</h3>
+		</center>
+		<br><br>
+		<div id="viewer">
+			<center><img id="puzzle" width="300" height="300"></center>
+			<div class="puzzlesNav">
+				<a id="prev" style="cursor: pointer;">&lharpoonup; Previous</a>
+				<h3 id="title" style="font-family: 'Amagro',sans-serif;"></h3>
+				<a id="next" style="cursor: pointer;font-family: 'Josefin Sans',sans-serif;">Next &rharpoonup;</a>
+			</div>
+		</div>
+		<script>
+			const url = "https://opensheet.elk.sh/13G6QupXgQifBEgAVVKcUk9PnKNp3fzDxNtYLMvzF8MI/Display";
+			
+			let puzzles = [];
+			let currentIndex = 0;
+			let viewingIndex = 0;
+			
+			const img = document.getElementById("puzzle");
+			const title = document.getElementById("title");
+			const prev = document.getElementById("prev");
+			const next = document.getElementById("next");
+			
+			async function loadPuzzles() {
+			    try {
+			        const response = await fetch(url);
+			        puzzles = await response.json();
+			
+			        currentIndex = puzzles.findIndex(p => p.Done != "TRUE");
+			
+			        if(currentIndex == -1) {
+			            currentIndex = puzzles.length - 1;
+			        }
+			
+			        viewingIndex = currentIndex;
+			        render();
+			    } catch (error) {
+			        console.error("Fetch blocked or failed:", error);
+			        title.textContent = "Error loading puzzles.";
+			    }
+			}
+			
+			function render() {
+			    if (!puzzles || puzzles.length === 0) return;
+			    
+			    const puzzle = puzzles[viewingIndex];
+			
+			    img.src = puzzle.Link;
+			    title.textContent = "Puzzle " + puzzle.Number;
+			
+			    prev.style.opacity = viewingIndex === 0 ? "0.5" : "1";
+			    prev.style.pointerEvents = viewingIndex === 0 ? "none" : "auto";
+			
+			    next.style.opacity = viewingIndex === puzzles.length - 1 ? "0.5" : "1";
+			    next.style.pointerEvents = viewingIndex === puzzles.length - 1 ? "none" : "auto";
+			}
+			
+			prev.addEventListener('click', () => {
+			    if(viewingIndex > 0){
+			        viewingIndex--;
+			        render();
+			    }
+			});
+			
+			next.addEventListener('click', () => {
+			    if(viewingIndex < puzzles.length - 1){
+			        viewingIndex++;
+			        render();
+			    }
+			});
+			
+			loadPuzzles();
+		</script>
+	</body>
 </html>
