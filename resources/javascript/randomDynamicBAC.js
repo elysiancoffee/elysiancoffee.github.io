@@ -1,4 +1,4 @@
-let visibilityFreq = 1;
+let visibilityFreq = 300;
 const TRIVIA_API_ENDPOINT = "https://elysiancoffee.vercel.app/api/chips-trivia";
 
 const SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbxBjlT0Wu44fJkJeCNPT5PB8E2iTuVB4tvrBB1EPN3rQhaggkYJHNJIEchvbUlSUUU/exec";
