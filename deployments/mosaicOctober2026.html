@@ -22,35 +22,22 @@
             display: flex;
             align-items: center;
             justify-content: center;
-
-            background: transparent;
             overflow: hidden;
-
-            font-family: Arial, sans-serif;
         }
 
-        #image {
-            display: block;
-
+        #contest-image {
             max-width: 90%;
             max-height: 90%;
-
             object-fit: contain;
         }
 
-        #impostor {
+        #impostor-message {
             display: none;
 
-            font-size: clamp(24px, 5vw, 64px);
+            font-family: Arial, sans-serif;
+            font-size: clamp(28px, 5vw, 64px);
             font-weight: 800;
             text-align: center;
-            letter-spacing: 0.05em;
-
-            color: #000;
-        }
-
-        #loading {
-            display: none;
         }
     </style>
 </head>
@@ -63,104 +50,72 @@
         alt="Contest image"
     >
 
-    <div id="impostor">
+    <div id="impostor-message">
         YOU ARE AN IMPOSTOR
     </div>
 
-
     <script>
 
-        const image = document.getElementById("image");
-        const impostorMessage = document.getElementById("impostor");
+        const image = document.getElementById("contest-image");
+        const message = document.getElementById("impostor-message");
 
 
-        const USERNAME_SELECTOR = ".username";
-
-
-        function getMainPageUsername() {
-
-            try {
-
-                const element =
-                    window.parent.document.querySelector(USERNAME_SELECTOR);
-
-                if (!element) {
-                    return null;
-                }
-
-                return element.textContent.trim();
-
-            } catch (error) {
-                return null;
-            }
-        }
-
-        function checkImpostor(usernames) {
-
-            const username = getMainPageUsername();
-
-            if (!username) {
-                return;
-            }
-
-            const normalizedUsername = username
-                .trim()
-                .toLowerCase();
-
-            const isImpostor = usernames.some(name =>
-                String(name).trim().toLowerCase() === normalizedUsername
-            );
-
-            if (isImpostor) {
-
-                image.style.display = "none";
-                impostorMessage.style.display = "block";
-
-            } else {
-
-                image.style.display = "block";
-                impostorMessage.style.display = "none";
-
-            }
-        }
-    window.addEventListener("message", event => {
+        window.addEventListener("message", function(event) {
 
             /*
-             * Optional security check.
+             * The main site sends:
              *
-             * Replace this with your actual domain.
-             *
-             * Example:
-             *
-             * if (event.origin !== "https://www.example.com") return;
-             *
-             * For now, "*" is accepted.
+             * {
+             *     type: "IMPOSTOR_CHECK",
+             *     username: "B",
+             *     impostors: ["A", "C", "D"]
+             * }
              */
 
             if (!event.data) {
                 return;
             }
 
-            if (event.data.type !== "IMPOSTOR_LIST") {
+            if (event.data.type !== "IMPOSTOR_CHECK") {
                 return;
             }
 
-            const usernames = event.data.usernames;
 
-            if (!Array.isArray(usernames)) {
-                return;
-            }
+            const username = String(event.data.username || "")
+                .trim()
+                .toLowerCase();
 
-            checkImpostor(usernames);
+            const impostors = Array.isArray(event.data.impostors)
+                ? event.data.impostors
+                : [];
 
-        });
 
-        window.addEventListener("load", () => {
+            /*
+             * Check whether THIS user is an impostor.
+             */
 
-            const username = getMainPageUsername();
+            const isImpostor = impostors.some(function(impostor) {
 
-            if (username) {
-                console.log("Detected username:", username);
+                return String(impostor)
+                    .trim()
+                    .toLowerCase() === username;
+
+            });
+
+
+            /*
+             * Display the appropriate thing.
+             */
+
+            if (isImpostor) {
+
+                image.style.display = "none";
+                message.style.display = "block";
+
+            } else {
+
+                image.style.display = "block";
+                message.style.display = "none";
 
             }
 
