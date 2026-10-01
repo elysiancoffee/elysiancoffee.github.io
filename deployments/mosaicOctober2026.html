@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Impostor Check</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: transparent;
+            overflow: hidden;
+
+            font-family: Arial, sans-serif;
+        }
+
+        #image {
+            display: block;
+
+            max-width: 90%;
+            max-height: 90%;
+
+            object-fit: contain;
+        }
+
+        #impostor {
+            display: none;
+
+            font-size: clamp(24px, 5vw, 64px);
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: 0.05em;
+
+            color: #000;
+        }
+
+        #loading {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <img
+        id="image"
+        src="https://cdn.origo.hu/2023/12/XBy5mJn0OvisGDgMpS88kiUmX3v5xPQauBhLLtciNvI/fill/1347/758/no/1/aHR0cHM6Ly9jbXNjZG4uYXBwLmNvbnRlbnQucHJpdmF0ZS9jb250ZW50LzBiYTgwODY4NTA3NTRkZTliYTUxZDMyZmJjN2I0MGM4.webp"
+        alt="Contest image"
+    >
+
+    <div id="impostor">
+        YOU ARE AN IMPOSTOR
+    </div>
+
+
+    <script>
+
+        const image = document.getElementById("image");
+        const impostorMessage = document.getElementById("impostor");
+
+
+        const USERNAME_SELECTOR = ".username";
+
+
+        function getMainPageUsername() {
+
+            try {
+
+                const element =
+                    window.parent.document.querySelector(USERNAME_SELECTOR);
+
+                if (!element) {
+                    return null;
+                }
+
+                return element.textContent.trim();
+
+            } catch (error) {
+                return null;
+            }
+        }
+
+        function checkImpostor(usernames) {
+
+            const username = getMainPageUsername();
+
+            if (!username) {
+                return;
+            }
+
+            const normalizedUsername = username
+                .trim()
+                .toLowerCase();
+
+            const isImpostor = usernames.some(name =>
+                String(name).trim().toLowerCase() === normalizedUsername
+            );
+
+            if (isImpostor) {
+
+                image.style.display = "none";
+                impostorMessage.style.display = "block";
+
+            } else {
+
+                image.style.display = "block";
+                impostorMessage.style.display = "none";
+
+            }
+        }
+    window.addEventListener("message", event => {
+
+            /*
+             * Optional security check.
+             *
+             * Replace this with your actual domain.
+             *
+             * Example:
+             *
+             * if (event.origin !== "https://www.example.com") return;
+             *
+             * For now, "*" is accepted.
+             */
+
+            if (!event.data) {
+                return;
+            }
+
+            if (event.data.type !== "IMPOSTOR_LIST") {
+                return;
+            }
+
+            const usernames = event.data.usernames;
+
+            if (!Array.isArray(usernames)) {
+                return;
+            }
+
+            checkImpostor(usernames);
+
+        });
+
+        window.addEventListener("load", () => {
+
+            const username = getMainPageUsername();
+
+            if (username) {
+                console.log("Detected username:", username);
+
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
