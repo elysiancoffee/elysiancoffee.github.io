@@ -23,9 +23,11 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            background: transparent;
         }
 
         #contest-image {
+            display: block;
             max-width: 90%;
             max-height: 90%;
             object-fit: contain;
@@ -33,11 +35,11 @@
 
         #impostor-message {
             display: none;
-
             font-family: Arial, sans-serif;
             font-size: clamp(28px, 5vw, 64px);
             font-weight: 800;
             text-align: center;
+            color: #000;
         }
     </style>
 </head>
@@ -45,9 +47,9 @@
 <body>
 
     <img
-        id="image"
-        src="https://cdn.origo.hu/2023/12/XBy5mJn0OvisGDgMpS88kiUmX3v5xPQauBhLLtciNvI/fill/1347/758/no/1/aHR0cHM6Ly9jbXNjZG4uYXBwLmNvbnRlbnQucHJpdmF0ZS9jb250ZW50LzBiYTgwODY4NTA3NTRkZTliYTUxZDMyZmJjN2I0MGM4.webp"
-        alt="Contest image"
+        id="contest-image"
+        src="image.jpg"
+        alt="Contest Image"
     >
 
     <div id="impostor-message">
@@ -55,72 +57,19 @@
     </div>
 
     <script>
-
-        const image = document.getElementById("contest-image");
-        const message = document.getElementById("impostor-message");
-
-
         window.addEventListener("message", function(event) {
-
-            /*
-             * The main site sends:
-             *
-             * {
-             *     type: "IMPOSTOR_CHECK",
-             *     username: "B",
-             *     impostors: ["A", "C", "D"]
-             * }
-             */
-
-            if (!event.data) {
+            if (event.data?.type !== "IMPOSTOR_RESULT") {
                 return;
             }
 
-            if (event.data.type !== "IMPOSTOR_CHECK") {
-                return;
-            }
-
-
-            const username = String(event.data.username || "")
-                .trim()
-                .toLowerCase();
-
-            const impostors = Array.isArray(event.data.impostors)
-                ? event.data.impostors
-                : [];
-
-
-            /*
-             * Check whether THIS user is an impostor.
-             */
-
-            const isImpostor = impostors.some(function(impostor) {
-
-                return String(impostor)
-                    .trim()
-                    .toLowerCase() === username;
-
-            });
-
-
-            /*
-             * Display the appropriate thing.
-             */
-
-            if (isImpostor) {
-
-                image.style.display = "none";
-                message.style.display = "block";
-
+            if (event.data.impostor === true) {
+                document.getElementById("contest-image").style.display = "none";
+                document.getElementById("impostor-message").style.display = "block";
             } else {
-
-                image.style.display = "block";
-                message.style.display = "none";
-
+                document.getElementById("contest-image").style.display = "block";
+                document.getElementById("impostor-message").style.display = "none";
             }
-
         });
-
     </script>
 
 </body>
