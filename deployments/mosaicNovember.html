@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="./style.css">
+		<link href="https://fonts.googleapis.com/css2?family=Glass+Antiqua&family=Josefin+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+		<link href="https://fonts.cdnfonts.com/css/amagro" rel="stylesheet">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>MOSAIC. // July</title>
+		<style>
+			body {background-color: hsl(200deg 9.09% 4.5%);color:white;font-family: arial;}
+			#viewer { display: flex; flex-direction: column; gap: 30px; }
+			.puzzlesNav { display: flex; justify-content: space-between; align-items: end; }
+		</style>
+	</head>
+	<body>
+		<center>
+			<h3 style="font-family: 'Glass Antiqua',sans-serif;">THE MOSAIC. // NOVEMBER</h3>
+			<h4 style="font-family: 'Glass Antiqua',sans-serif;" id="title">CURRENT PUZZLE</h4>
+		</center>
+		<br>
+		<div id="viewer">
+			<center><h4 id="hints" style="font-family: 'Amagro',sans-serif;"></h4></center>
+			<div class="puzzlesNav" style="display:flex;justify-content:end;">
+				<a id="next" style="cursor: pointer;font-family: 'Josefin Sans',sans-serif;">Next ⇁</a>
+			</div>
+		</div>
+		<script>
+            const url = "https://opensheet.elk.sh/13G6QupXgQifBEgAVVKcUk9PnKNp3fzDxNtYLMvzF8MI/Display Nov";
+        
+            let puzzles = [];
+            let viewingIndex = 0;
+            let unlockedIndex = 0;
+        
+            const title = document.getElementById("title");
+            const hints = document.getElementById("hints");
+            const next = document.getElementById("next");
+        
+            async function loadPuzzles() {
+                try {
+                    const response = await fetch(url);
+        
+                    if (!response.ok) throw new Error("Failed to fetch puzzles");
+        
+                    puzzles = await response.json();
+        
+                    if (!puzzles.length) throw new Error("No puzzles found");
+        
+                    unlockedIndex = puzzles.findIndex(
+                        p => p.Done?.trim().toUpperCase() !== "TRUE"
+                    );
+        
+                    if (unlockedIndex === -1) {
+                        unlockedIndex = puzzles.length - 1;
+                    }
+        
+                    viewingIndex = unlockedIndex;
+        
+                    render();
+        
+                } catch (error) {
+                    console.error(error);
+                    title.textContent = "Error loading puzzles.";
+                }
+            }
+        
+            function render() {
+                const current = puzzles[viewingIndex];
+            
+                title.textContent = "Jinx Word " + current.Numbers;
+            
+                hints.textContent = current.Hints
+                    ? "Hints: " + current.Hints
+                    : "No hints available.";
+            
+                const canAdvance = viewingIndex < Math.min(unlockedIndex + 1, puzzles.length - 1);
+            
+                next.style.opacity = canAdvance ? "1" : "0.5";
+                next.style.pointerEvents = canAdvance ? "auto" : "none";
+            }
+            
+            next.addEventListener("click", () => {
+                if (viewingIndex < Math.min(unlockedIndex + 1, puzzles.length - 1)) {
+                    viewingIndex++;
+                    render();
+                }
+            });
+        
+            loadPuzzles();
+        </script>
+	</body>
+</html>
